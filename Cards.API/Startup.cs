@@ -31,11 +31,15 @@ namespace Cards.API
             services.ConfigureCors();
             services.ConfigureIISIntegration();
 
+            services.ConfigureRepositoryManager();
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +52,7 @@ namespace Cards.API
 
             PathBuilder.CreatePath(Configuration.GetConnectionString("CardsData"));
 
+            app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

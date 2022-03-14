@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Cards.Entity;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
@@ -8,7 +9,7 @@ namespace Cards.API.Utils
     {
         public static void CreatePath(string cardsDataFileName)
         {
-            GetPath(cardsDataFileName);
+           DataInitializer.InitialPath(GetPath(cardsDataFileName));
         }
 
         private static string GetPath(string fileName)

@@ -28,16 +28,25 @@ namespace Cards.Repository
             DataInitializer.WriteContents(path, contents);
         }
 
-        public IList<T> FindAll(string content)
+        public IQueryable<T> FindAll(string content)
         {
-            return Serializer.Deserialize<List<T>>(content);
+            if(string.IsNullOrEmpty(content))
+            {
+                return null;
+            }
+
+            return (IQueryable<T>)Serializer.Deserialize<List<T>>(content);
         }
 
-        public IList<T> FindByCondition(Func<T, bool> func, string content)
+        public IQueryable<T> FindByCondition(Func<T, bool> func, string content)
         {
-            return Serializer.Deserialize<List<T>>(content)
-                .Where(func)
-                .ToList();
+            if (string.IsNullOrEmpty(content))
+            {
+                return null;
+            }
+
+            return (IQueryable<T>)Serializer.Deserialize<List<T>>(content)
+                .Where(func);
         }
     }
 }
