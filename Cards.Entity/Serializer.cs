@@ -2,6 +2,9 @@
 
 namespace Cards.Entity
 {
+    /// <summary>
+    /// Class for serialization by json.
+    /// </summary>
     public class Serializer
     {
         public T Deserialize<T>(string content) where T : class

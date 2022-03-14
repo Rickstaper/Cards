@@ -1,12 +1,11 @@
 ﻿using Cards.Contracts;
 using Cards.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cards.Repository
 {
+    /// <summary>
+    /// Class for getting access to repositories.
+    /// </summary>
     public class RepositoryManager : IRepositoryManager
     {
         private ICardRepository _cardRepository;

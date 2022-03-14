@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cards.API.Extensions
 {
+    /// <summary>
+    /// Static class contains extensions for IServiceCollection interface. 
+    /// </summary>
     public static class ServiceExtensions
     {
         public static void ConfigureCors(this IServiceCollection services) =>

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Cards.Entity.Models
 {
+    /// <summary>
+    /// Entity of card.
+    /// </summary>
     public class Card
     {
         public Guid Id { get; set; }

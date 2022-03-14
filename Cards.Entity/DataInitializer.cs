@@ -2,6 +2,9 @@
 
 namespace Cards.Entity
 {
+    /// <summary>
+    /// Static class for initial path of data file and write and read contents from data file.
+    /// </summary>
     public static class DataInitializer
     {
         public static string CardsDataPath { get; set; }
