@@ -20,34 +20,47 @@ namespace Cards.Repository
 
         }
 
-        public async Task<IEnumerable<Card>> GetAllCardsAsync()
+        public void CreateCard(Card card)
         {
-            string cardContents = DataInitializer.GetContents(DataInitializer.CardsDataPath);
+            var cardsFromFile = FindAll(DataInitializer.CardsDataPath);
+            IList<Card> cardsToFile;
 
-            var cards = FindAll(cardContents);
+            if (cardsFromFile is null)
+            {
+                cardsToFile = new List<Card>();
+            }
+            else
+            {
+                cardsToFile = cardsFromFile.ToList();
+            }
+
+            cardsToFile.Add(card);
+
+            Write(DataInitializer.CardsDataPath, cardsToFile);
+        }
+
+        public IEnumerable<Card> GetAllCardsAsync()
+        {
+            var cards = FindAll(DataInitializer.CardsDataPath);
 
             if(cards is null)
             {
                 return null;
             }
 
-            return await cards
-                        .OrderBy(card => card.Name)
-                        .ToListAsync();
+            return cards.OrderBy(card => card.Name).ToList();
         }
 
-        public async Task<Card> GetCardAsync(Guid id)
+        public Card GetCardAsync(Guid id)
         {
-            string cardContents = DataInitializer.GetContents(DataInitializer.CardsDataPath);
-
-            var card = FindByCondition(card => card.Id.Equals(id), cardContents);
+            var card = FindByCondition(card => card.Id.Equals(id), DataInitializer.CardsDataPath);
 
             if (card is null)
             {
                 return null;
             }
 
-            return await card.SingleOrDefaultAsync();
+            return card.SingleOrDefault();
         }
     }
 }

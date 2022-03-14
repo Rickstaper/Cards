@@ -9,6 +9,8 @@ namespace Cards.API.Mapping
         public MappingProfile()
         {
             CreateMap<Card, CardDto>();
+
+            CreateMap<CardForCreationDto, Card>();
         }
     }
 }

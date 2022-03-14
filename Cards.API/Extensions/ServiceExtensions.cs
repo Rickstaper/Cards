@@ -1,4 +1,5 @@
 ﻿using Cards.Contracts;
+using Cards.Entity;
 using Cards.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,10 @@ namespace Cards.API.Extensions
             {
             });
 
-        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+        public static void ConfigureRepositoryManager(this IServiceCollection services)
+        {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddSingleton<Serializer>();
+        }
     }
 }

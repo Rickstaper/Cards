@@ -8,8 +8,8 @@ namespace Cards.Contracts
 {
     public interface IRepositoryBase<T>
     {
-        IQueryable<T> FindAll(string content);
-        IQueryable<T> FindByCondition(Func<T, bool> func, string content);
-        void Write(string path, T entity);
+        IList<T> FindAll(string path);
+        IList<T> FindByCondition(Func<T, bool> func, string path);
+        void Write(string path, IList<T> entity);
     }
 }

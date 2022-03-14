@@ -3,8 +3,6 @@ using Cards.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace Cards.Repository
 {
@@ -21,32 +19,37 @@ namespace Cards.Repository
             Serializer = serializer;
         }
 
-        public void Write(string path, T entity)
+        public void Write(string path, IList<T> entity)
         {
             string contents = Serializer.Serialize(entity);
 
             DataInitializer.WriteContents(path, contents);
         }
 
-        public IQueryable<T> FindAll(string content)
+        public IList<T> FindAll(string path)
         {
-            if(string.IsNullOrEmpty(content))
-            {
-                return null;
-            }
+            string content = DataInitializer.GetContents(path);
 
-            return (IQueryable<T>)Serializer.Deserialize<List<T>>(content);
-        }
-
-        public IQueryable<T> FindByCondition(Func<T, bool> func, string content)
-        {
             if (string.IsNullOrEmpty(content))
             {
                 return null;
             }
 
-            return (IQueryable<T>)Serializer.Deserialize<List<T>>(content)
-                .Where(func);
+            return Serializer.Deserialize<List<T>>(content);
+        }
+
+        public IList<T> FindByCondition(Func<T, bool> func, string path)
+        {
+            string content = DataInitializer.GetContents(path);
+
+            if (string.IsNullOrEmpty(content))
+            {
+                return null;
+            }
+
+            return Serializer.Deserialize<List<T>>(content)
+                             .Where(func)
+                             .ToList();
         }
     }
 }

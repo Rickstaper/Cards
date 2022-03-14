@@ -27,9 +27,9 @@ namespace Cards.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCards()
+        public IActionResult GetCards()
         {
-            var cards = await _repository.CardRepository.GetAllCardsAsync();
+            var cards = _repository.CardRepository.GetAllCardsAsync();
 
             if(cards is null)
             {
@@ -42,10 +42,10 @@ namespace Cards.API.Controllers
             return Ok(cardsDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "CardById")]
         public async Task<IActionResult> GetCard(Guid id)
         {
-            var card = await _repository.CardRepository.GetCardAsync(id);
+            var card = _repository.CardRepository.GetCardAsync(id);
 
             if(card is null)
             {
@@ -56,6 +56,25 @@ namespace Cards.API.Controllers
             var cardDto = _mapper.Map<CardDto>(card);
 
             return Ok(cardDto);
+        }
+
+        [HttpPost]
+        public IActionResult CreateCard([FromBody]CardForCreationDto cardFromBody)
+        {
+            if(cardFromBody == null)
+            {
+                _logger.LogError("CardForCreationDto object sent from client is null.");
+
+                return BadRequest("CardForCreationDto objext is null.");
+            }
+
+            var cardEntity = _mapper.Map<Card>(cardFromBody);
+
+            _repository.CardRepository.CreateCard(cardEntity);
+
+            var cardToReturn = _mapper.Map<CardDto>(cardEntity);
+
+            return CreatedAtRoute("CardById", new { id = cardToReturn.Id }, cardToReturn);
         }
     }
 }

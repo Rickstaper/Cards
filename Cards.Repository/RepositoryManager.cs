@@ -11,7 +11,10 @@ namespace Cards.Repository
         private ICardRepository _cardRepository;
         private Serializer _serializer;
 
-
+        public RepositoryManager(Serializer serializer)
+        {
+            _serializer = serializer;
+        }
 
         public ICardRepository CardRepository
         {
