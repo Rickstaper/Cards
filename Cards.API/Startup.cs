@@ -1,4 +1,5 @@
 using Cards.API.Extensions;
+using Cards.API.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -44,6 +45,8 @@ namespace Cards.API
             {
                 app.UseHsts();
             }
+
+            PathBuilder.CreatePath(Configuration.GetConnectionString("CardsData"));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
