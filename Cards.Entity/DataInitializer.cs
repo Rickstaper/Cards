@@ -4,16 +4,21 @@ namespace Cards.Entity
 {
     public static class DataInitializer
     {
-        private static string CardsDataPath { get; set; }
+        public static string CardsDataPath { get; set; }
 
         public static void InitialPath(string cardsDataPath)
         {
             CardsDataPath = cardsDataPath;
         }
 
-        public static string GetCardsContent()
+        public static string GetContents(string path)
         {
-            return File.ReadAllText(CardsDataPath);
+            return File.ReadAllText(path);
+        }
+
+        public static void WriteContents(string path, string contents)
+        {
+            File.WriteAllText(path, contents);
         }
     }
 }

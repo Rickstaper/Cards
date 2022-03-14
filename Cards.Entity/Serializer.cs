@@ -2,11 +2,16 @@
 
 namespace Cards.Entity
 {
-    public static class Serializer
+    public class Serializer
     {
-        public static T Deserialize<T>(string content) where T : class
+        public T Deserialize<T>(string content) where T : class
         {
             return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        public string Serialize<T>(T model)
+        {
+            return JsonConvert.SerializeObject(model);
         }
     }
 }
