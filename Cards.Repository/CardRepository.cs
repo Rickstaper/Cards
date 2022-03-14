@@ -2,6 +2,7 @@
 using Cards.Entity;
 using Cards.Entity.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +34,20 @@ namespace Cards.Repository
             return await cards
                         .OrderBy(card => card.Name)
                         .ToListAsync();
+        }
+
+        public async Task<Card> GetCardAsync(Guid id)
+        {
+            string cardContents = DataInitializer.GetContents(DataInitializer.CardsDataPath);
+
+            var card = FindByCondition(card => card.Id.Equals(id), cardContents);
+
+            if (card is null)
+            {
+                return null;
+            }
+
+            return await card.SingleOrDefaultAsync();
         }
     }
 }

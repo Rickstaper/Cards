@@ -4,6 +4,7 @@ using Cards.Entity.DataTransferObject;
 using Cards.Entity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,12 +33,29 @@ namespace Cards.API.Controllers
 
             if(cards is null)
             {
-                return NoContent();
+                _logger.LogError("Json file with cards is empty.");
+                return NotFound();
             }
 
             var cardsDto = _mapper.Map<IEnumerable<CardDto>>(cards);
 
             return Ok(cardsDto);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCard(Guid id)
+        {
+            var card = await _repository.CardRepository.GetCardAsync(id);
+
+            if(card is null)
+            {
+                _logger.LogInformation($"Card with id: {id} doesn't exist in json file.");
+                return NotFound();
+            }
+
+            var cardDto = _mapper.Map<CardDto>(card);
+
+            return Ok(cardDto);
         }
     }
 }

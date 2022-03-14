@@ -8,6 +8,7 @@ namespace Cards.Contracts
 {
     public interface ICardRepository
     {
-        public Task<IEnumerable<Card>> GetAllCardsAsync();
+        Task<IEnumerable<Card>> GetAllCardsAsync();
+        Task<Card> GetCardAsync(Guid id);
     }
 }
