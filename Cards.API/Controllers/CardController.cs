@@ -28,9 +28,9 @@ namespace Cards.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCards()
+        public async Task<IActionResult> GetCards()
         {
-            var cards = _repository.CardRepository.GetAllCardsAsync();
+            var cards = await _repository.CardRepository.GetAllCardsAsync();
 
             if(cards is null)
             {
@@ -44,9 +44,9 @@ namespace Cards.API.Controllers
         }
 
         [HttpGet("{id}", Name = "CardById")]
-        public IActionResult GetCard(Guid id)
+        public async Task<IActionResult> GetCard(Guid id)
         {
-            var card = _repository.CardRepository.GetCardAsync(id);
+            var card = await _repository.CardRepository.GetCardAsync(id);
 
             if(card is null)
             {
@@ -79,9 +79,9 @@ namespace Cards.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCard(Guid id)
+        public async Task<IActionResult> DeleteCard(Guid id)
         {
-            var cardFromFile = _repository.CardRepository.GetCardAsync(id);
+            var cardFromFile = await _repository.CardRepository.GetCardAsync(id);
 
             if(cardFromFile is null)
             {
@@ -95,7 +95,7 @@ namespace Cards.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCard(Guid id, [FromBody]CardForUpdateDto cardFromBody)
+        public async Task<IActionResult> UpdateCard(Guid id, [FromBody]CardForUpdateDto cardFromBody)
         {
             if (cardFromBody == null)
             {
@@ -104,7 +104,7 @@ namespace Cards.API.Controllers
                 return BadRequest("CardForCreationDto objext is null.");
             }
 
-            var cardFromFile = _repository.CardRepository.GetCardAsync(id);
+            var cardFromFile = await _repository.CardRepository.GetCardAsync(id);
 
             if (cardFromFile is null)
             {
@@ -120,7 +120,7 @@ namespace Cards.API.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult PartiallyUpdateCard(Guid id, [FromBody]JsonPatchDocument<CardForUpdateDto> pathDoc)
+        public async Task<IActionResult> PartiallyUpdateCard(Guid id, [FromBody]JsonPatchDocument<CardForUpdateDto> pathDoc)
         {
             if(pathDoc is null)
             {
@@ -128,7 +128,7 @@ namespace Cards.API.Controllers
                 return BadRequest("pathDoc object is null.");
             }
 
-            var cardFromFile = _repository.CardRepository.GetCardAsync(id);
+            var cardFromFile = await _repository.CardRepository.GetCardAsync(id);
 
             if (cardFromFile is null)
             {

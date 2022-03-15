@@ -51,7 +51,7 @@ namespace Cards.Repository
         }
 
         //TODO: create async method
-        public IEnumerable<Card> GetAllCardsAsync()
+        public async Task<IEnumerable<Card>> GetAllCardsAsync()
         {
             var cards = FindAll(DataInitializer.CardsDataPath);
 
@@ -60,12 +60,17 @@ namespace Cards.Repository
                 return null;
             }
 
-            return cards.OrderBy(card => card.Name).ToList();
+            var cardsOrderByTask = Task.Run(() => cards.OrderBy(card => card.Name).ToList());
+
+            return await cardsOrderByTask;
         }
         //TODO: create async method
-        public Card GetCardAsync(Guid id)
+        public async Task<Card> GetCardAsync(Guid id)
         {
-            var card = FindByCondition(card => card.Id.Equals(id), DataInitializer.CardsDataPath);
+            var findByConditionTask = Task.Run(() => FindByCondition(card => card.Id.Equals(id), 
+                DataInitializer.CardsDataPath));
+
+            var card = await findByConditionTask;
 
             if (card is null)
             {
