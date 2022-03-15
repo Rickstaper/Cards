@@ -2,6 +2,7 @@
 using Cards.Contracts;
 using Cards.Entity.DataTransferObject;
 using Cards.Entity.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -113,7 +114,35 @@ namespace Cards.API.Controllers
 
             _mapper.Map(cardFromBody, cardFromFile);
 
-            _repository.CardRepository.UpdateByPut(cardFromFile);
+            _repository.CardRepository.UpdateCard(cardFromFile);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult PartiallyUpdateCard(Guid id, [FromBody]JsonPatchDocument<CardForUpdateDto> pathDoc)
+        {
+            if(pathDoc is null)
+            {
+                _logger.LogError("patchDoc object sent from client is null.");
+                return BadRequest("pathDoc object is null.");
+            }
+
+            var cardFromFile = _repository.CardRepository.GetCardAsync(id);
+
+            if (cardFromFile is null)
+            {
+                _logger.LogInformation($"Card with id: {id} doesn't exist in json file.");
+                return NotFound();
+            }
+
+            var cardToPatch = _mapper.Map<CardForUpdateDto>(cardFromFile);
+
+            pathDoc.ApplyTo(cardToPatch);
+
+            _mapper.Map(cardToPatch, cardFromFile);
+
+            _repository.CardRepository.UpdateCard(cardFromFile);
 
             return NoContent();
         }

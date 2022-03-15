@@ -12,6 +12,6 @@ namespace Cards.Contracts
         Card GetCardAsync(Guid id);
         void CreateCard(Card card);
         void DeleteCard(Card card);
-        void UpdateByPut(Card card);
+        void UpdateCard(Card card);
     }
 }

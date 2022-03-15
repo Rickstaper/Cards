@@ -38,7 +38,7 @@ namespace Cards.API
             services.AddControllers(config =>
             {
                 config.ReturnHttpNotAcceptable = true;
-            });
+            }).AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

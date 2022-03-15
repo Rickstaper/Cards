@@ -75,7 +75,7 @@ namespace Cards.Repository
             return card.SingleOrDefault();
         }
 
-        public void UpdateByPut(Card card)
+        public void UpdateCard(Card card)
         {
             var cardsFromFile = FindAll(DataInitializer.CardsDataPath);
 

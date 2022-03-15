@@ -12,7 +12,7 @@ namespace Cards.API.Mapping
 
             CreateMap<CardForCreationDto, Card>();
 
-            CreateMap<CardForUpdateDto, Card>();
+            CreateMap<CardForUpdateDto, Card>().ReverseMap();
         }
     }
 }
