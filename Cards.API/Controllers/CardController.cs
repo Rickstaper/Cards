@@ -43,7 +43,7 @@ namespace Cards.API.Controllers
         }
 
         [HttpGet("{id}", Name = "CardById")]
-        public async Task<IActionResult> GetCard(Guid id)
+        public IActionResult GetCard(Guid id)
         {
             var card = _repository.CardRepository.GetCardAsync(id);
 
@@ -75,6 +75,22 @@ namespace Cards.API.Controllers
             var cardToReturn = _mapper.Map<CardDto>(cardEntity);
 
             return CreatedAtRoute("CardById", new { id = cardToReturn.Id }, cardToReturn);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCard(Guid id)
+        {
+            var card = _repository.CardRepository.GetCardAsync(id);
+
+            if(card is null)
+            {
+                _logger.LogInformation($"Card with id: {id} doesn't exist in json file.");
+                return NotFound();
+            }
+
+            _repository.CardRepository.DeleteCard(card);
+
+            return NoContent();
         }
     }
 }

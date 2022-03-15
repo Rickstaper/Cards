@@ -39,6 +39,18 @@ namespace Cards.Repository
             Write(DataInitializer.CardsDataPath, cardsToFile);
         }
 
+        public void DeleteCard(Card card)
+        {
+            var cardsFromFile = FindAll(DataInitializer.CardsDataPath);
+
+            cardsFromFile.Remove(cardsFromFile
+                                 .Where(c => c.Id.Equals(card.Id))
+                                 .SingleOrDefault());
+
+            Write(DataInitializer.CardsDataPath, cardsFromFile);
+        }
+
+        //TODO: create async method
         public IEnumerable<Card> GetAllCardsAsync()
         {
             var cards = FindAll(DataInitializer.CardsDataPath);
@@ -50,7 +62,7 @@ namespace Cards.Repository
 
             return cards.OrderBy(card => card.Name).ToList();
         }
-
+        //TODO: create async method
         public Card GetCardAsync(Guid id)
         {
             var card = FindByCondition(card => card.Id.Equals(id), DataInitializer.CardsDataPath);

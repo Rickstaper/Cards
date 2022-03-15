@@ -11,5 +11,6 @@ namespace Cards.Contracts
         IEnumerable<Card> GetAllCardsAsync();
         Card GetCardAsync(Guid id);
         void CreateCard(Card card);
+        void DeleteCard(Card card);
     }
 }
