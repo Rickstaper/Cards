@@ -74,5 +74,18 @@ namespace Cards.Repository
 
             return card.SingleOrDefault();
         }
+
+        public void UpdateByPut(Card card)
+        {
+            var cardsFromFile = FindAll(DataInitializer.CardsDataPath);
+
+            cardsFromFile.Remove(cardsFromFile
+                                 .Where(c => c.Id.Equals(card.Id))
+                                 .SingleOrDefault());
+
+            cardsFromFile.Add(card);
+
+            Write(DataInitializer.CardsDataPath, cardsFromFile);
+        }
     }
 }

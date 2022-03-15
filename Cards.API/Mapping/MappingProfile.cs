@@ -11,6 +11,8 @@ namespace Cards.API.Mapping
             CreateMap<Card, CardDto>();
 
             CreateMap<CardForCreationDto, Card>();
+
+            CreateMap<CardForUpdateDto, Card>();
         }
     }
 }

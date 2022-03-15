@@ -80,15 +80,40 @@ namespace Cards.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteCard(Guid id)
         {
-            var card = _repository.CardRepository.GetCardAsync(id);
+            var cardFromFile = _repository.CardRepository.GetCardAsync(id);
 
-            if(card is null)
+            if(cardFromFile is null)
             {
                 _logger.LogInformation($"Card with id: {id} doesn't exist in json file.");
                 return NotFound();
             }
 
-            _repository.CardRepository.DeleteCard(card);
+            _repository.CardRepository.DeleteCard(cardFromFile);
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateCard(Guid id, [FromBody]CardForUpdateDto cardFromBody)
+        {
+            if (cardFromBody == null)
+            {
+                _logger.LogError("CardForCreationDto object sent from client is null.");
+
+                return BadRequest("CardForCreationDto objext is null.");
+            }
+
+            var cardFromFile = _repository.CardRepository.GetCardAsync(id);
+
+            if (cardFromFile is null)
+            {
+                _logger.LogInformation($"Card with id: {id} doesn't exist in json file.");
+                return NotFound();
+            }
+
+            _mapper.Map(cardFromBody, cardFromFile);
+
+            _repository.CardRepository.UpdateByPut(cardFromFile);
 
             return NoContent();
         }
