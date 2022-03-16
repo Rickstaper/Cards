@@ -30,5 +30,25 @@ namespace Cards.Client.Utils.Api
 
             return client.Execute(request);
         }
+
+        public static IRestResponse SendDeleteRequest(string url, string endpoint)
+        {
+            client = new RestClient(url);
+            request = new RestRequest(endpoint, Method.DELETE);
+
+            request.AddHeader("Accept", "application/json");
+            return client.Execute(request);
+        }
+
+        public static IRestResponse SendPutRequest(string url, string endpoint, CardForUpdateDto card)
+        {
+            client = new RestClient(url);
+            request = new RestRequest(endpoint, Method.PUT);
+
+            request.AddHeader("Accept", "application/json");
+            request.AddJsonBody(card);
+
+            return client.Execute(request);
+        }
     }
 }

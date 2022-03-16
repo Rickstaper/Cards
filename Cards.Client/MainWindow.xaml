@@ -9,55 +9,66 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="mainGrid">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <TabControl x:Name="actions">
+            
             <TabItem x:Name="tabOfGetAllCards" Header="Get all cards">
                 <TabItem.Content>
                     <StackPanel>
-                        <Button Click="GetAllCards" Content="Get all" Width="80" HorizontalAlignment="Left" Margin="10 10 0 0"></Button>
+                        <Button Click="GetAllCards_ButtonClick" Content="Get all" Width="80" HorizontalAlignment="Left" Margin="10 10 0 0"></Button>
                     </StackPanel>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="tabOfGetCard" Header="Get one card">
+            
+            <TabItem x:Name="tabOfGetCard" Header="Get a card">
                 <TabItem.Content>
                     <StackPanel>
-                        <TextBlock Text="Get one card by id" HorizontalAlignment="Left" Margin="10 10 0 0"/>
+                        <TextBlock Text="Get a card by id" HorizontalAlignment="Left" Margin="10 10 0 0"/>
                         <TextBox x:Name="inputIdForSearch" HorizontalAlignment="Left" Width="300" Margin="10 10 0 0"/>
-                        <Button Content="Get card" Click="GetCardById" HorizontalAlignment="Left" Margin="10 10 0 0"/>
+                        <Button Content="Get card" Click="GetCardById_ButtonClick" HorizontalAlignment="Left" Margin="10 10 0 0"/>
                     </StackPanel>
                 </TabItem.Content>
             </TabItem>
-            <TabItem x:Name="tabOfCreateCard" Header="Create card">
+            
+            <TabItem x:Name="tabOfCreateCard" Header="Create a card">
                 <TabItem.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Create card" HorizontalAlignment="Left" Margin="10 10 0 0" Grid.Row="0" 
+                        
+                        <TextBlock Text="Create a card" HorizontalAlignment="Left" Margin="10 10 0 0" Grid.Row="0" 
                                    Width="Auto"/>
+                        
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
+                            
                             <TextBlock Text="Name" HorizontalAlignment="Left" Margin="10 10 0 0" Grid.Column="0" Width="Auto"/>
                             <TextBox x:Name="inputCardName" HorizontalAlignment="Left" Margin="10 10 0 0" Grid.Column="1" Width="200"/>
                         </Grid>
+                        
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
+                            
                             <Button x:Name="openDialog" Content="Select path to image" Click="OpenFileDialog_ButtonClick" 
                                     HorizontalAlignment="Left" Margin="10 10 0 0" Grid.Column="0" 
                                     Width="Auto"/>
@@ -66,6 +77,96 @@
                         </Grid>
                         <Button x:Name="createCardButton" Content="Create" Click="CreateCard_ButtonClick" 
                                 Grid.Row="3" Width="Auto" HorizontalAlignment="Left" Margin="10 10 0 0"/>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="tabOfDeleteCard" Header="Delete a card">
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Text="Delete a card by id" HorizontalAlignment="Left"
+                                   Width="Auto" Margin="10 10 0 0"/>
+                        
+                        <Grid x:Name="fieldsForDeleteCardById" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0"  Text="Id" HorizontalAlignment="Left"
+                                   Width="Auto" Margin="10 10 0 0"/>
+                            <TextBox Grid.Column="1" x:Name="inputIdForDeleteCard" HorizontalAlignment="Left"
+                                     Width="200" Margin="10 10 0 0"/>
+                        </Grid>
+                        
+                        <Button Grid.Row="2" x:Name="deleteCard" Content="Delete" HorizontalAlignment="Left"
+                                Margin="10 10 0 0" Width="Auto" Click="DeleteCard_ButtonClick"/>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+
+            <TabItem x:Name="tabOfCompleteUpdateCard" Header="Complete update">
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Text="Complete update card by id."
+                                   HorizontalAlignment="Left" Width="Auto" Margin="10 10 0 0"/>
+                        
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0" Text="Id"
+                                   HorizontalAlignment="Left" Width="Auto" Margin="10 10 0 0"/>
+                            <TextBox Grid.Column="1" x:Name="inputIdForCompleteUpdate" Margin="10 10 0 0"
+                                     HorizontalAlignment="Left" Width="200"/>
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0" Text="Name"
+                                   HorizontalAlignment="Left" Width="Auto" Margin="10 10 0 0"/>
+                            <TextBox Grid.Column="1" x:Name="inputNameForCompleteUpdate" Margin="10 10 0 0"
+                                     HorizontalAlignment="Left" Width="200"/>
+                        </Grid>
+                        
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button x:Name="openDialogForCompleteUpdate" Content="Select path to image" Click="OpenFileDialogForCompleteUpdate_ButtonClick" 
+                                    HorizontalAlignment="Left" Margin="10 10 0 0" Grid.Column="0" 
+                                    Width="Auto"/>
+                            <TextBox x:Name="resultOfFileDialogForCompleteUpdate" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"
+                                     Margin="10 10 0 0" Width="200"/>
+                        </Grid>
+                        
+                        <Button x:Name="completeUpdate" Content="Update" Click="CompleteUpdate_ButtonClick" 
+                                Grid.Row="4" Width="Auto" HorizontalAlignment="Left" Margin="10 10 0 0"/>
                     </Grid>
                 </TabItem.Content>
             </TabItem>
@@ -82,9 +183,11 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
+                    
                     <TextBlock Text="Id" Grid.Column="0" HorizontalAlignment="Center" Grid.Row="0"></TextBlock>
                     <TextBlock Text="Name" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
                     <TextBlock Text="Image" Grid.Column="2" HorizontalAlignment="Center"></TextBlock>
@@ -95,9 +198,11 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
+                    
                 </Grid>
             </Grid>
         </ScrollViewer>

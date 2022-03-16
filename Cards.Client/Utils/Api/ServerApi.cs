@@ -22,5 +22,15 @@ namespace Cards.Client.Utils.Api
         {
             return ApiHandler.SendPostRequest(@"https://localhost:5001/api/", "cards", card);
         }
+
+        public static IRestResponse DeleteCard(string id)
+        {
+            return ApiHandler.SendDeleteRequest(@"https://localhost:5001/api/", $"cards/{id}");
+        }
+
+        public static IRestResponse UpdateCard(string id, CardForUpdateDto card)
+        {
+            return ApiHandler.SendPutRequest(@"https://localhost:5001/api/", $"cards/{id}", card);
+        }
     }
 }

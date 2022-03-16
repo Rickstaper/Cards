@@ -32,7 +32,7 @@ namespace Cards.Client
             InitializeComponent();
         }
 
-        private void GetAllCards(object sender, RoutedEventArgs e)
+        private void GetAllCards_ButtonClick(object sender, RoutedEventArgs e)
         {
             results.Children.Clear();
 
@@ -78,7 +78,7 @@ namespace Cards.Client
             }
         }
 
-        private void GetCardById(object sender, RoutedEventArgs e)
+        private void GetCardById_ButtonClick(object sender, RoutedEventArgs e)
         {
             results.Children.Clear();
 
@@ -134,7 +134,7 @@ namespace Cards.Client
 
             if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
             {
-                MessageBox.Show("Internal server error");
+                MessageBox.Show("Internal server error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -163,7 +163,7 @@ namespace Cards.Client
 
             results.Children.Add(nameFromCard);
 
-            BitmapImage bitmap = FileHandler.GetBitmapImage(FileHandler.GetImageInBase64(card.Image);
+            BitmapImage bitmap = FileHandler.GetBitmapImage(FileHandler.GetImageInBase64(card.Image));
 
             Image image = new Image();
             image.Source = bitmap;
@@ -181,6 +181,76 @@ namespace Cards.Client
             if(openFileDialog.ShowDialog() == true)
             {
                 resultOfFileDialog.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void DeleteCard_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            results.Children.Clear();
+
+            string idForDelete = inputIdForDeleteCard.Text;
+            Guid idForCheckParse;
+
+            if (idForDelete == String.Empty || !Guid.TryParse(idForDelete, out idForCheckParse))
+            {
+                MessageBox.Show("Field for id doesn't contain id or id isn't correct.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            IRestResponse response = ServerApi.DeleteCard(idForDelete);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                MessageBox.Show("Internal server error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                MessageBox.Show("Not deleted.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void CompleteUpdate_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            results.Children.Clear();
+
+            string idForUpdate = inputIdForCompleteUpdate.Text;
+
+            Guid idForCheckParse;
+
+            if (idForUpdate == String.Empty || !Guid.TryParse(idForUpdate, out idForCheckParse))
+            {
+                MessageBox.Show("Field for id doesn't contain id or id isn't correct.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string nameForUpdate = inputNameForCompleteUpdate.Text;
+            byte[] imageInBytes = FileHandler.GetImageInBytesArray(resultOfFileDialogForCompleteUpdate.Text);
+
+            IRestResponse response = ServerApi.UpdateCard(idForUpdate, new CardForUpdateDto() { Name = nameForUpdate, Image = imageInBytes });
+
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                MessageBox.Show("Internal server error.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (response.StatusCode != System.Net.HttpStatusCode.NoContent)
+            {
+                MessageBox.Show("Not created.");
+                return;
+            }
+        }
+
+        private void OpenFileDialogForCompleteUpdate_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                resultOfFileDialogForCompleteUpdate.Text = openFileDialog.FileName;
             }
         }
     }
