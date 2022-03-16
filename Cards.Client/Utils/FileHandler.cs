@@ -8,15 +8,17 @@ namespace Cards.Client.Utils
 {
     public static class FileHandler
     {
-        public static byte[] GetImageByteArray(string imagePath)
-        {
-            System.Drawing.Image image = System.Drawing.Image.FromFile(imagePath);
-            
-
-            using (MemoryStream ms = new MemoryStream())
+        public static string GetImageInBase64(string imagePath)
+        {   
+            using(System.Drawing.Image image = System.Drawing.Image.FromFile(imagePath))
             {
-                image.Save(ms, image.RawFormat);
-                return ms.ToArray();
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    image.Save(ms, image.RawFormat);
+                    byte[] bytes = ms.ToArray();
+
+                    return Convert.ToBase64String(bytes);
+                }
             }
         }
 
@@ -33,7 +35,7 @@ namespace Cards.Client.Utils
             {
                 BitmapImage bitmap = new BitmapImage();
 
-                image.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
                 stream.Position = 0;
 
                 bitmap.BeginInit();

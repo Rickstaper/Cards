@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cards.Client.Utils;
 
 namespace Cards.Client
 {
@@ -25,9 +26,15 @@ namespace Cards.Client
             InitializeComponent();
         }
 
-        private void Button_click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("W");
-        }
+
+
+        //private void Button_click(object sender, RoutedEventArgs e)
+        //{
+        //    string bytesInString = FileHandler.GetImageInBase64(@"C:\Photo\PH\массаж.png");
+
+        //    BitmapImage bitmap = FileHandler.GetBitmapImage(bytesInString);
+
+        //    myImage.Source = bitmap;
+        //}
     }
 }
